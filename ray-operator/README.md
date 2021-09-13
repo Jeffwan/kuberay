@@ -120,7 +120,7 @@ The next step is to install the RayCluster custom resource definition into the c
 kubectl kustomize config/crd | kubectl apply -f -
 ```
 
-Refer to [raycluster_types.go](api/v1alpha1/raycluster_types.go) and [ray.io_rayclusters.yaml](config/crd/bases/ray.io_rayclusters.yaml) for the details of the CRD.
+Refer to [raycluster_types.go](api/raycluster/v1alpha1/raycluster_types.go) and [ray.io_rayclusters.yaml](config/crd/bases/ray.io_rayclusters.yaml) for the details of the CRD.
 
 ### Deploying the controller
 

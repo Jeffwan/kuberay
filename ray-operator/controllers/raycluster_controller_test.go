@@ -21,7 +21,7 @@ import (
 	"reflect"
 	"time"
 
-	rayiov1alpha1 "github.com/ray-project/ray-contrib/ray-operator/api/v1alpha1"
+	rayiov1alpha1 "github.com/ray-project/ray-contrib/ray-operator/api/raycluster/v1alpha1"
 	"github.com/ray-project/ray-contrib/ray-operator/controllers/common"
 	"github.com/ray-project/ray-contrib/ray-operator/controllers/utils"
 

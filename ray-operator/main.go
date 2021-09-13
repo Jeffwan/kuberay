@@ -4,7 +4,7 @@ import (
 	"flag"
 	"os"
 
-	rayv1 "github.com/ray-project/ray-contrib/ray-operator/api/v1alpha1"
+	rayv1 "github.com/ray-project/ray-contrib/ray-operator/api/raycluster/v1alpha1"
 	"github.com/ray-project/ray-contrib/ray-operator/controllers"
 
 	"k8s.io/apimachinery/pkg/runtime"

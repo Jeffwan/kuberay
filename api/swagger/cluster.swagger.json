@@ -58,13 +58,6 @@
             "type": "string"
           },
           {
-            "name": "namespace",
-            "description": "Kubernetes namespace as the list options.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
             "name": "user",
             "description": "Kubernetes list options for labelselector.",
             "in": "query",
@@ -141,13 +134,6 @@
             "in": "query",
             "required": false,
             "type": "string"
-          },
-          {
-            "name": "namespace",
-            "description": "The namespace of the Cluster to be retrieved.",
-            "in": "query",
-            "required": false,
-            "type": "string"
           }
         ],
         "tags": [
@@ -182,13 +168,6 @@
           {
             "name": "name",
             "description": "The name of the Cluster to be retrieved.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "namespace",
-            "description": "The namespace of the Cluster to be retrieved.",
             "in": "query",
             "required": false,
             "type": "string"

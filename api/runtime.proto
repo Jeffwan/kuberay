@@ -63,12 +63,10 @@ message GetClusterRuntimeRequest {
   string id = 1;
   // The name of the Cluster to be retrieved.
   string name = 2;
-  // The namespace of the Cluster to be retrieved.
-  string namespace = 3;
 }
 
 message ListClusterRuntimesRequest {
-  string namespace = 1;
+  // TODO: support paganation later
 }
 
 message ListClusterRuntimesResponse {
@@ -78,22 +76,21 @@ message ListClusterRuntimesResponse {
 message DeleteClusterRuntimeRequest {
   // The ID of the Cluster to be deleted.
   string id = 1;
-  // The name of the Cluster to be retrieved.
+  // The name of the Cluster to be deleted.
   string name = 2;
-  // The namespace of the Cluster to be retrieved.
-  string namespace = 3;
 }
 
 message ClusterRuntime {
-  string name = 1;
-  string base_image = 2;
-  repeated string pip_packages = 3;
-  repeated string conda_packages = 4;
-  repeated string system_packages = 5;
-  map<string, string> environment_variables = 6;
-  string custom_commands = 7;
+  string id = 1;
+  string name = 2;
+  string base_image = 3;
+  repeated string pip_packages = 4;
+  repeated string conda_packages = 5;
+  repeated string system_packages = 6;
+  map<string, string> environment_variables = 7;
+  string custom_commands = 8;
   // Output
-  string image = 8;
+  string image = 9;
 }
 
 service ComputeRuntimeService {
@@ -137,14 +134,12 @@ message CreateComputeRuntimeRequest {
 message GetComputeRuntimeRequest {
   // The ID of the Compute to be retrieved. reserved field for database layer query later
   string id = 1;
-  // The name of the Compute to be retrieved.
+  // The name of the compute runtime to be retrieved.
   string name = 2;
-  // The namespace of the Compute to be retrieved.
-  string namespace = 3;
 }
 
 message ListComputeRuntimesRequest {
-  string namespace = 1;
+  // TODO: support pagingation later
 }
 
 message ListComputeRuntimesResponse {
@@ -155,10 +150,13 @@ message ListComputeRuntimesResponse {
 message DeleteComputeRuntimeRequest {
   // The ID of the compute runtime to be deleted.
   string id = 1;
+  // The name of the compute runtime to be delete.
+  string name = 2;
 }
 
 message ComputeRuntime {
-  string name = 1;
+  string id = 1;
+  string name = 2;
   enum Cloud {
       ALIBABA = 0;
       AWS = 1;
@@ -166,11 +164,11 @@ message ComputeRuntime {
       GCP = 3;
       ON_PREM = 4;
   }
-  Cloud cloud = 2;
-  string region = 3;
-  string availability_zone = 4;
-  HeadGroupSpec head_group_spec = 5;
-  repeated WorkerGroupSpec worker_group_sepc = 6;
+  Cloud cloud = 3;
+  string region = 4;
+  string availability_zone = 5;
+  HeadGroupSpec head_group_spec = 6;
+  repeated WorkerGroupSpec worker_group_sepc = 7;
 }
 
 message HeadGroupSpec {

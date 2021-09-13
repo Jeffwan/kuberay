@@ -81,8 +81,6 @@ message GetClusterRequest {
   string id = 1;
   // The name of the Cluster to be retrieved.
   string name = 2;
-  // The namespace of the Cluster to be retrieved.
-  string namespace = 3;
 }
 
 message ListClustersRequest {
@@ -100,11 +98,8 @@ message ListClustersRequest {
   // Ascending by default.
   string sort_by = 3;
 
-  // Kubernetes namespace as the list options
-  string namespace = 4;
-
   // Kubernetes list options for labelselector
-  string user = 5;
+  string user = 4;
 
 }
 
@@ -124,8 +119,6 @@ message DeleteClusterRequest {
   string id = 1;
   // The name of the Cluster to be retrieved.
   string name = 2;
-  // The namespace of the Cluster to be retrieved.
-  string namespace = 3;
 }
 
 message Cluster {

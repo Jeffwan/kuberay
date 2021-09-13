@@ -37,14 +37,6 @@
             }
           }
         },
-        "parameters": [
-          {
-            "name": "namespace",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }
-        ],
         "tags": [
           "ClusterRuntimeService"
         ]
@@ -114,13 +106,6 @@
             "in": "query",
             "required": false,
             "type": "string"
-          },
-          {
-            "name": "namespace",
-            "description": "The namespace of the Cluster to be retrieved.",
-            "in": "query",
-            "required": false,
-            "type": "string"
           }
         ],
         "tags": [
@@ -154,14 +139,7 @@
           },
           {
             "name": "name",
-            "description": "The name of the Cluster to be retrieved.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "namespace",
-            "description": "The namespace of the Cluster to be retrieved.",
+            "description": "The name of the Cluster to be deleted.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -190,14 +168,6 @@
             }
           }
         },
-        "parameters": [
-          {
-            "name": "namespace",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }
-        ],
         "tags": [
           "ComputeRuntimeService"
         ]
@@ -263,14 +233,7 @@
           },
           {
             "name": "name",
-            "description": "The name of the Compute to be retrieved.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "namespace",
-            "description": "The namespace of the Compute to be retrieved.",
+            "description": "The name of the compute runtime to be retrieved.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -304,6 +267,13 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "name",
+            "description": "The name of the compute runtime to be delete.",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [
@@ -327,6 +297,9 @@
     "apiClusterRuntime": {
       "type": "object",
       "properties": {
+        "id": {
+          "type": "string"
+        },
         "name": {
           "type": "string"
         },
@@ -369,6 +342,9 @@
     "apiComputeRuntime": {
       "type": "object",
       "properties": {
+        "id": {
+          "type": "string"
+        },
         "name": {
           "type": "string"
         },

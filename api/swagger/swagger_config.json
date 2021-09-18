@@ -1,0 +1,5 @@
+{
+    "packageName": "kuberay_api",
+    "packageVersion": "'v0.1.0'",
+    "packageUrl": "https://github.com/ray-project/kuberay"
+}

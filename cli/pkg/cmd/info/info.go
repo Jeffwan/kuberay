@@ -3,7 +3,7 @@ package info
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/ray-project/ray-contrib/cli/pkg/cmd/version"
+	"github.com/ray-project/kuberay/cli/pkg/cmd/version"
 	"github.com/spf13/cobra"
 	"runtime"
 )

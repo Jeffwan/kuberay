@@ -17,10 +17,10 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/ray-project/ray-contrib/cli/pkg/cmd/info"
-	"github.com/ray-project/ray-contrib/cli/pkg/cmd/cluster"
-	"github.com/ray-project/ray-contrib/cli/pkg/cmd/runtime"
-	"github.com/ray-project/ray-contrib/cli/pkg/cmd/version"
+	"github.com/ray-project/kuberay/cli/pkg/cmd/info"
+	"github.com/ray-project/kuberay/cli/pkg/cmd/cluster"
+	"github.com/ray-project/kuberay/cli/pkg/cmd/runtime"
+	"github.com/ray-project/kuberay/cli/pkg/cmd/version"
 	"os"
 
 	"github.com/spf13/cobra"

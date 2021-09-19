@@ -1,8 +1,8 @@
 package runtime
 
 import (
-	"github.com/ray-project/ray-contrib/cli/pkg/cmd/runtime/cluster"
-	"github.com/ray-project/ray-contrib/cli/pkg/cmd/runtime/compute"
+	"github.com/ray-project/kuberay/cli/pkg/cmd/runtime/cluster"
+	"github.com/ray-project/kuberay/cli/pkg/cmd/runtime/compute"
 	"github.com/spf13/cobra"
 )
 

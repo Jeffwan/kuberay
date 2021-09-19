@@ -3,8 +3,8 @@ package compute
 import (
 	"context"
 	"github.com/olekukonko/tablewriter"
-	"github.com/ray-project/ray-contrib/api/go_client"
-	"github.com/ray-project/ray-contrib/cli/pkg/cmdutil"
+	"github.com/ray-project/kuberay/api/go_client"
+	"github.com/ray-project/kuberay/cli/pkg/cmdutil"
 	"github.com/spf13/cobra"
 	"log"
 	"os"
@@ -25,8 +25,6 @@ func newCmdList() *cobra.Command {
 }
 
 func listComputeRuntimes() error {
-	// we need to connect to gRPC service, need a common place to have the client
-
 	// Get gRPC connection
 	conn, err := cmdutil.GetGrpcConn()
 	if err != nil {
@@ -58,11 +56,13 @@ func convertRuntimesToStrings(runtimes []*go_client.ComputeRuntime) [][]string {
 	var data [][]string
 
 	for _, r := range runtimes {
-		line := []string{r.Id, r.Name, r.Region, r.AvailabilityZone, r.HeadGroupSpec.ServiceType}
-		data = append(data, line)
+		data = append(data, convertRuntimesToString(r))
 	}
 
 	return data
 }
 
-
+func convertRuntimesToString(r *go_client.ComputeRuntime) []string {
+	line := []string{r.Id, r.Name, r.Region, r.AvailabilityZone, r.HeadGroupSpec.ServiceType}
+	return line
+}

@@ -6,7 +6,6 @@ func NewCmdComputeRuntime() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "compute <command>",
 		Short: "Manage Compute Runtime",
-		Long:  ``,
 		Annotations: map[string]string{
 			"IsCore": "true",
 		},

@@ -15,6 +15,7 @@ func NewCmdClusterRuntime() *cobra.Command {
 	}
 
 	cmd.AddCommand(newCmdGet())
+	cmd.AddCommand(newCmdList())
 	cmd.AddCommand(newCmdCreate())
 	cmd.AddCommand(newCmdDelete())
 

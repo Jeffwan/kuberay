@@ -15,7 +15,7 @@ limitations under the License.
 */
 package main
 
-import "github.com/ray-project/ray-contrib/cli/cmd"
+import "github.com/ray-project/kuberay/cli/cmd"
 
 func main() {
 	cmd.Execute()

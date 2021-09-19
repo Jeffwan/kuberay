@@ -17,9 +17,19 @@ package cmd
 
 import (
 	"fmt"
+	"github.com/ray-project/ray-contrib/cli/pkg/cmd/info"
+	"github.com/ray-project/ray-contrib/cli/pkg/cmd/cluster"
+	"github.com/ray-project/ray-contrib/cli/pkg/cmd/runtime"
+	"github.com/ray-project/ray-contrib/cli/pkg/cmd/version"
 	"os"
-	"github.com/spf13/cobra"
 
+	"github.com/spf13/cobra"
+	"strings"
+	"time"
+
+	"github.com/fatih/color"
+	"github.com/kris-nova/logger"
+	lol "github.com/kris-nova/lolgopher"
 	"github.com/spf13/viper"
 )
 
@@ -47,7 +57,11 @@ func Execute() {
 }
 
 func init() {
-	cobra.OnInitialize(initConfig)
+	loggerLevel := rootCmd.PersistentFlags().IntP("verbose", "v", 3, "set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging")
+	colorValue := rootCmd.PersistentFlags().StringP("color", "C", "true", "toggle colorized logs (valid options: true, false, fabulous)")
+	cobra.OnInitialize(initConfig, func() {
+		initLogger(*loggerLevel, *colorValue)
+	})
 
 	// Here you will define your flags and configuration settings.
 	// Cobra supports persistent flags, which, if defined here,
@@ -58,6 +72,12 @@ func init() {
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+
+	rootCmd.PersistentFlags().BoolP("help", "h", false, "help for this command")
+	rootCmd.AddCommand(info.NewCmdInfo())
+	rootCmd.AddCommand(version.NewCmdVersion())
+	rootCmd.AddCommand(cluster.NewCmdCluster())
+	rootCmd.AddCommand(runtime.NewCmdRuntime())
 }
 
 // initConfig reads in config file and ENV variables if set.
@@ -81,5 +101,74 @@ func initConfig() {
 	// If a config file is found, read it in.
 	if err := viper.ReadInConfig(); err == nil {
 		fmt.Fprintln(os.Stderr, "Using config file:", viper.ConfigFileUsed())
+	}
+}
+
+func initLogger(level int, colorValue string) {
+	logger.Layout = "2021-01-02 15:04:05"
+
+	var bitwiseLevel int
+	switch level {
+	case 4:
+		bitwiseLevel = logger.LogDeprecated | logger.LogAlways | logger.LogSuccess | logger.LogCritical | logger.LogWarning | logger.LogInfo | logger.LogDebug
+	case 3:
+		bitwiseLevel = logger.LogDeprecated | logger.LogAlways | logger.LogSuccess | logger.LogCritical | logger.LogWarning | logger.LogInfo
+	case 2:
+		bitwiseLevel = logger.LogDeprecated | logger.LogAlways | logger.LogSuccess | logger.LogCritical | logger.LogWarning
+	case 1:
+		bitwiseLevel = logger.LogDeprecated | logger.LogAlways | logger.LogSuccess | logger.LogCritical
+	case 0:
+		bitwiseLevel = logger.LogDeprecated | logger.LogAlways | logger.LogSuccess
+	default:
+		bitwiseLevel = logger.LogDeprecated | logger.LogEverything
+	}
+	logger.BitwiseLevel = bitwiseLevel
+
+	switch colorValue {
+	case "fabulous":
+		logger.Writer = lol.NewLolWriter()
+	case "true":
+		logger.Writer = color.Output
+	}
+
+	logger.Line = func(prefix, format string, a ...interface{}) string {
+		if !strings.Contains(format, "\n") {
+			format = fmt.Sprintf("%s%s", format, "\n")
+		}
+		now := time.Now()
+		fNow := now.Format(logger.Layout)
+		var colorize func(format string, a ...interface{}) string
+		var icon string
+		switch prefix {
+		case logger.PreAlways:
+			icon = "✿"
+			colorize = color.GreenString
+		case logger.PreCritical:
+			icon = "✖"
+			colorize = color.RedString
+		case logger.PreInfo:
+			icon = "ℹ"
+			colorize = color.CyanString
+		case logger.PreDebug:
+			icon = "▶"
+			colorize = color.GreenString
+		case logger.PreSuccess:
+			icon = "✔"
+			colorize = color.CyanString
+		case logger.PreWarning:
+			icon = "!"
+			colorize = color.GreenString
+		default:
+			icon = "ℹ"
+			colorize = color.CyanString
+		}
+
+		out := fmt.Sprintf(format, a...)
+		out = fmt.Sprintf("%s [%s]  %s", fNow, icon, out)
+		if colorValue == "true" {
+			out = colorize(out)
+		}
+
+		return out
 	}
 }

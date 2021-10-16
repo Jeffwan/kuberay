@@ -1,6 +1,9 @@
 
 # Image URL to use all building/pushing image targets
-IMG ?= controller:latest
+IMG_NAME ?= kuberay/operator
+IMG_TAG ?= $(shell git rev-parse HEAD)
+IMG ?= ${IMG_NAME}:${IMG_TAG}
+
 # Produce CRDs that work back to Kubernetes 1.11 (no version conversion)
 CRD_OPTIONS ?= "crd:maxDescLen=100,trivialVersions=true,preserveUnknownFields=false"
 
@@ -63,11 +66,17 @@ build: generate fmt vet ## Build manager binary.
 run: manifests generate fmt vet ## Run a controller from your host.
 	go run ./main.go
 
-docker-build: test ## Build docker image with the manager.
+docker-build: ## Build docker image with the manager.
 	docker build -t ${IMG} .
 
 docker-push: ## Push docker image with the manager.
 	docker push ${IMG}
+
+docker-tag-nightly: # Tag nightly docker image
+	docker tag ${IMG} kuberay/operator:nightly
+
+docker-push-all: # Push all tags to container registry
+	docker push ${IMG_NAME}
 
 ##@ Deployment
 

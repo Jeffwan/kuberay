@@ -5,17 +5,16 @@ on:
     branches:  
     - master
   pull_request:
-    branches: [ master ]
+    branches:
+    - master
 
 jobs:
-
   build:
-    env:
-      working-directory: ./ray-operator
     name: Build
     runs-on: ubuntu-latest
+    env:
+      working-directory: ./ray-operator
     steps:
-
     - name: Set up Go 1.15.x
       uses: actions/setup-go@v2
       with:
@@ -48,4 +47,17 @@ jobs:
 
     - name: Test
       run: make test
+      working-directory: ${{env.working-directory}}
+
+    - name: Build Container Image
+      run: make docker-build
+      working-directory: ${{env.working-directory}}
+
+    - name: Publish Container Images
+      # if: ${{ github.event_name == 'push' }}
+      run: |
+        docker images
+        make docker-tag-nightly
+        make docker-push-all
+        docker images
       working-directory: ${{env.working-directory}}
